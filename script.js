@@ -1,4 +1,2 @@
-// Basic script file
-document.getElementById('show-details-btn').addEventListener('click', function() {
-    alert('Displaying more details about Cynthia.');
-});
+// Student 3 (JavaScript Developer) will add functionality here
+// to take input from the form and display it in the #student-list div.
