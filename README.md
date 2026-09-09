@@ -58,6 +58,8 @@ The team uses a simple **feature-branch workflow**: `main` always holds a workin
 | `docs/readme`         | Daniel Paul   | Project documentation                        | Merged (#3) |
 | `feature/student-name`| Kartik A      | Heading change for conflict exercise         | Merged (#4) |
 | `feature/app-title`   | Daniel Paul   | Heading change for conflict exercise         | Merged (#5) |
+| `feature/contact`     | Daniel Paul   | Contact information section                  | Merged (#7) |
+| `docs/readme-conflict`| Daniel Paul   | Documentation of the conflict resolution     | Merged (#6) |
 
 ## Pull Requests Created
 
@@ -68,6 +70,8 @@ The team uses a simple **feature-branch workflow**: `main` always holds a workin
 | 3  | `docs/readme`   | `main`   | Write detailed project README          | Daniel Paul   | Merged  |
 | 4  | `feature/student-name` | `main` | Update application heading          | Kartik A      | Merged  |
 | 5  | `feature/app-title` | `main`  | Update application title               | Daniel Paul   | Merged  |
+| 6  | `docs/readme-conflict` | `main` | Record merge conflict resolution   | Daniel Paul   | Merged  |
+| 7  | `feature/contact` | `main`    | Add contact information                | Daniel Paul   | Merged  |
 
 ## Merge Conflict: Cause and Resolution
 
