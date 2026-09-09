@@ -50,14 +50,14 @@ The team uses a simple **feature-branch workflow**: `main` always holds a workin
 - Pull requests are reviewed by the team lead before merging
 - Afterward, all local `main` branches are synced before the next branch is created
 
-| Branch                | Author        | Purpose                                     | Status   |
-|-----------------------|---------------|----------------------------------------------|----------|
-| `main`                | Team          | Stable, integrated history                   | Active   |
-| `feature/ui`          | Sovin Somy    | Card layout, spacing, heading/button styling | Merged   |
-| `feature/javascript`  | Daniel Paul   | Add-student form → dynamic card functionality| Merged   |
-| `feature/contact`     | TBD           | Contact information section                  | To do    |
-| `feature/student-name`| TBD           | Heading change for conflict exercise         | To do    |
-| `feature/app-title`   | TBD           | Heading change for conflict exercise         | To do    |
+| Branch                | Author        | Purpose                                     | Status      |
+|-----------------------|---------------|----------------------------------------------|-------------|
+| `main`                | Team          | Stable, integrated history                   | Active      |
+| `feature/ui`          | Sovin Somy    | Card layout, spacing, heading/button styling | Merged (#1) |
+| `feature/javascript`  | Daniel Paul   | Add-student form → dynamic card functionality| Merged (#2) |
+| `docs/readme`         | Daniel Paul   | Project documentation                        | Merged (#3) |
+| `feature/student-name`| Kartik A      | Heading change for conflict exercise         | Merged (#4) |
+| `feature/app-title`   | Daniel Paul   | Heading change for conflict exercise         | Merged (#5) |
 
 ## Pull Requests Created
 
@@ -65,38 +65,54 @@ The team uses a simple **feature-branch workflow**: `main` always holds a workin
 |----|-----------------|----------|----------------------------------------|---------------|---------|
 | 1  | `feature/ui`    | `main`   | Improve student information UI         | Sovin Somy    | Merged  |
 | 2  | `feature/javascript` | `main` | Add student details functionality      | Daniel Paul   | Merged  |
-
-*Additional PRs (e.g. `feature/contact`) will be listed here as the exercise progresses.*
+| 3  | `docs/readme`   | `main`   | Write detailed project README          | Daniel Paul   | Merged  |
+| 4  | `feature/student-name` | `main` | Update application heading          | Kartik A      | Merged  |
+| 5  | `feature/app-title` | `main`  | Update application title               | Daniel Paul   | Merged  |
 
 ## Merge Conflict: Cause and Resolution
 
-> Section maintained for the conflict exercise — completed by the team during the lab.
-
 ### What caused the conflict
 
-Two branches (`feature/student-name` and `feature/app-title`) changed the **same line** — the `<h1>` heading in `index.html` — in different ways while branching off the same older version of `main`. Git cannot merge two different edits to the same content automatically, so it flags a conflict instead of guessing.
+Two branches (`feature/student-name` and `feature/app-title`) were created from the same older version of `main` and both edited the **same line** — the `<h1>` heading in `index.html` — in different ways:
+
+| Branch                 | Heading change            | PR |
+|------------------------|---------------------------|----|
+| `feature/student-name` | Student Management System | #4 |
+| `feature/app-title`    | MCA Student Information Portal | #5 |
+
+PR #4 was merged into `main` first. When PR #5 was opened against the updated `main`, GitHub flagged it as **conflicting**: Git cannot automatically merge two *different* edits to the *same* line, so it leaves the decision to a human instead of guessing. The merge of `main` into `feature/app-title` produced conflict markers around the heading:
 
 ```
-<<<<<<< HEAD
+<<<<<<< HEAD                              ← feature/app-title version
 <h1>MCA Student Information Portal</h1>
+||||||| 4027e68                          ← common ancestor
+<h1>Student Information System</h1>
 =======
-<h1>Student Management System</h1>
+<h1>Student Management System</h1>       ← main version
 >>>>>>> main
 ```
 
+A conflict is not an error — it is a situation the team must consciously resolve.
+
 ### How it was resolved
 
-- The contributor with the second branch fetched latest `main`, merged it into their branch, and opened `index.html`
-- The team decided on a combined title: `<h1>Student Management System – MCA</h1>`
-- All conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) were removed
-- The resolved file was staged, committed (`Resolve merge conflict in application title`), and pushed
-- The pull request then merged cleanly into `main`
+1. Fetched the latest `main` and merged it into `feature/app-title`: `git merge main`
+2. Opened `index.html`, read both versions, and decided to **combine** them:
+   `<h1>Student Management System – MCA</h1>`
+3. Removed all conflict markers (`<<<<<<<`, `|||||||`, `=======`, `>>>>>>>`) so only the final heading remained
+4. Staged and committed the resolution:
+   ```
+   git add index.html
+   git commit -m "Resolve merge conflict in application title"
+   ```
+5. Pushed the branch — the pull request became mergeable and was merged into `main`
 
 ### Evidence
 
-- Screenshot of conflict markers in the file
-- Screenshot of the resolved heading
-- Pull request showing the successful merge
+- Merge-conflict state shown on **Pull Request #5** (`feature/app-title → main`) before resolution
+- Conflict markers observed in `index.html` during the local `git merge main`
+- Resolution commit pushed to `feature/app-title`
+- Pull Request #5 merged successfully after the fix
 
 ## How to Run the Application
 
