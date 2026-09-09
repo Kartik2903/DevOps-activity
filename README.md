@@ -75,6 +75,12 @@ The team uses a simple **feature-branch workflow**: `main` always holds a workin
 
 ## Merge Conflict: Cause and Resolution
 
+> **TL;DR** — Branches `feature/student-name` (#4) and `feature/app-title` (#5) both
+> edited the same `<h1>` line in `index.html` in different ways. #4 merged first;
+> #5 then conflicted on GitHub. We pulled `main` into `feature/app-title`, combined
+> the two headings into `<h1>Student Management System – MCA</h1>`, removed the
+> conflict markers, committed the fix, pushed, and PR #5 merged cleanly.
+
 ### What caused the conflict
 
 Two branches (`feature/student-name` and `feature/app-title`) were created from the same older version of `main` and both edited the **same line** — the `<h1>` heading in `index.html` — in different ways:
