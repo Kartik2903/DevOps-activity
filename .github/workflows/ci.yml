@@ -1,0 +1,37 @@
+name: CI Workflow
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    name: Code Integrity & Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify no conflict markers in code
+        run: |
+          echo "Checking for unresolved git conflict markers in source code..."
+          CONFLICTS=$(git ls-files '*.html' '*.css' '*.js' | xargs grep -E "^(<<<<<<<|=======|>>>>>>>)" || true)
+          if [ -n "$CONFLICTS" ]; then
+            echo "::error::Unresolved merge conflict markers detected in source code!"
+            echo "$CONFLICTS"
+            exit 1
+          fi
+          echo "No conflict markers found in source code."
+
+      - name: Validate HTML structure
+        run: |
+          python3 -c "
+          import html.parser
+          parser = html.parser.HTMLParser()
+          with open('index.html', 'r', encoding='utf-8') as f:
+              parser.feed(f.read())
+          print('HTML structure validated successfully.')
+          "

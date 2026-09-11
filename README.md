@@ -150,3 +150,39 @@ Or simply double-click `index.html` — the app runs entirely in the browser.
 - Pushing branches and opening pull requests
 - Reviewing and merging changes without overwriting teammates' work
 - Intentionally creating and resolving a merge conflict
+
+## Advanced DevOps Practices & Verification Evidence
+
+### 1. Visual Commit Topology & Branching Graph
+The complete repository history demonstrates strict adherence to feature branching, isolated parallel development, and explicit merge commits:
+
+![Git Branching & Merge Topology](docs/screenshots/01-git-branch-graph.png)
+
+### 2. Pull Request Management & Categorization Labels
+All 10 pull requests were managed with descriptive labels to categorize changes (`enhancement`, `ui`, `feature`, `documentation`, `conflict-resolved`):
+
+![GitHub Pull Requests with Labels](docs/screenshots/02-github-prs-proof.png)
+
+| Label | Color | Purpose |
+|---|---|---|
+| `conflict-resolved` | Green (#0e8a16) | Demonstrates identified, tested, and resolved merge conflicts |
+| `enhancement` | Light Blue (#a2eeef) | Feature and functional enhancements |
+| `ui` | Pink (#e99695) | User interface styling and responsive design |
+| `feature` | Blue (#1d76db) | New capability additions |
+| `documentation` | Dark Blue (#0075ca) | Readme and DevOps activity documentation |
+| `devops` | Purple (#5319e7) | CI/CD pipelines, Git hooks, repository automation |
+
+### 3. Merge Conflict Proof (Pull Request #5)
+Demonstrating human-in-the-loop conflict resolution between `feature/app-title` and `main`:
+
+![PR #5 Merge Conflict Resolution Details](docs/screenshots/03-pr-conflict-details.png)
+
+### 4. Git Pre-Commit Hook (Automated Quality Gate)
+To prevent accidental commits of unresolved merge conflict markers, a custom Git hook is included in `.githooks/pre-commit`. Enable it locally via:
+```zsh
+git config core.hooksPath .githooks
+chmod +x .githooks/pre-commit
+```
+
+### 5. Automated CI/CD Workflow
+A GitHub Actions workflow is established in `.github/workflows/ci.yml` that triggers on all pull requests and pushes to `main`, validating HTML syntax and ensuring no conflict markers are merged into production.
