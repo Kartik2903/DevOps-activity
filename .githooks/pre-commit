@@ -1,0 +1,17 @@
+#!/bin/zsh
+# Pre-commit hook: Verify no merge conflict markers exist in staged code files
+
+echo "🔍 [Pre-Commit] Checking for unresolved conflict markers in code files..."
+
+# Check staged code files (excluding documentation markdown) for conflict markers
+CONFLICT_FILES=$(git diff --cached --name-only | grep -E '\.(html|css|js|jsx|ts|tsx|json|py|sh)$' | xargs rg -l "^(<<<<<<<|=======|>>>>>>>)" 2>/dev/null)
+
+if [ -n "$CONFLICT_FILES" ]; then
+    echo "❌ [Pre-Commit Error] Unresolved conflict markers found in:"
+    echo "$CONFLICT_FILES"
+    echo "Please resolve conflicts completely before committing."
+    exit 1
+fi
+
+echo "✅ [Pre-Commit] No conflict markers found in code files. Code integrity verified."
+exit 0
