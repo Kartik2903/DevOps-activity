@@ -1,180 +1,133 @@
-# DevOps Lab 1: Comprehensive Git & GitHub Engineering Report
+# DevOps Lab 1 Report: Git & GitHub Workflows
+
+- **Name:** Daniel Paul
+- **Roll No:** 2547159
+- **Lab:** DevOps Lab 1
+- **GitHub:** [@K1NGS1LVER](https://github.com/K1NGS1LVER)
+- **Repo Link:** [https://github.com/Kartik2903/DevOps-activity](https://github.com/Kartik2903/DevOps-activity)
 
 ---
 
-### Student Submission Details
-- **Student Name:** Daniel Paul
-- **Roll Number:** 2547159
-- **Course & Lab:** DevOps Lab 1 (Collaborative Git & GitHub Workflows)
-- **GitHub Profile:** [@K1NGS1LVER](https://github.com/K1NGS1LVER)
-- **Repository:** [https://github.com/Kartik2903/DevOps-activity](https://github.com/Kartik2903/DevOps-activity)
+## 1. Git & GitHub Configuration
+
+- Configured user name, email, and default editor (Neovim):
+  ```zsh
+  git config --global user.name "dan"
+  git config --global user.email "booyahkaasah@gmail.com"
+  git config --global core.editor "nvim"
+  ```
+- Set up GitHub CLI authentication:
+  ```zsh
+  gh auth status
+  # Logged in to github.com account K1NGS1LVER
+  ```
+- Configured SSH commit signing:
+  ```zsh
+  git config --global commit.gpgsign true
+  git config --global gpg.format ssh
+  git config --global user.signingkey "/Users/dan/.ssh/id_ed25519_signing.pub"
+  ```
 
 ---
 
-## 1. Executive Summary & Objective
-The primary objective of this laboratory assignment is to demonstrate practical mastery of enterprise Version Control Systems (VCS) and DevOps collaboration lifecycles. This report details my individual configuration, branching strategy implementation, pull request management, local and remote merge conflict resolution, and advanced DevOps practices including automated Git hooks and CI/CD pipelines.
+## 2. Branching & Pull Requests Done by Me
+
+- Used feature branching (`feature/*`, `docs/*`) off `main`.
+- Created and merged 8 pull requests for features, documentation, and conflicts:
+  - **PR #2:** Added student card generation functionality (`feature/javascript`)
+  - **PR #3:** Wrote initial project README (`docs/readme`)
+  - **PR #5:** Title update with merge conflict (`feature/app-title`)
+  - **PR #6:** Documented how conflict was resolved (`docs/readme-conflict`)
+  - **PR #7:** Added contact details section (`feature/contact`)
+  - **PR #8:** Added contact branch to documentation table (`docs/readme-contact`)
+  - **PR #9:** Added TL;DR conflict summary in README (`docs/readme-conflict-summary`)
+  - **PR #11:** Added CI/CD pipeline, pre-commit hook, and proof images (`feature/devops-proof-and-hooks`)
+
+![GitHub Pull Requests List with Labels](docs/screenshots/02-github-prs-proof.png)
 
 ---
 
-## 2. Environment & Tool Configuration
+## 3. Merge Conflict: Created and Resolved (Git & GitHub)
 
-### A. Local Git Configuration
-My local development environment was configured with persistent developer credentials, an advanced diff/merge toolchain, and cryptographic signing keys:
-```zsh
-# Verify User Identity
-git config user.name "dan"
-git config user.email "booyahkaasah@gmail.com"
+- **How it happened:**
+  - Branch `feature/student-name` (PR #4) changed line 10 in `index.html` to `<h1>Student Management System</h1>`.
+  - My branch `feature/app-title` (PR #5) changed the same line to `<h1>MCA Student Information Portal</h1>`.
+  - PR #4 was merged first, causing PR #5 on GitHub to show a merge conflict.
 
-# Default Editor & Diff Tools
-git config core.editor "nvim"
-git config merge.conflictstyle "diff3"
+- **How I fixed it locally in Git:**
+  - Switched to `feature/app-title` and pulled `main`:
+    ```zsh
+    git switch feature/app-title
+    git merge main
+    ```
+  - Saw conflict markers in `index.html`:
+    ```html
+    <<<<<<< HEAD
+    <h1>MCA Student Information Portal</h1>
+    ||||||| 4027e68
+    <h1>Student Information System</h1>
+    =======
+    <h1>Student Management System</h1>
+    >>>>>>> main
+    ```
+  - Edited `index.html` in Neovim to combine both headings:
+    ```html
+    <h1>Student Management System – MCA</h1>
+    ```
+  - Removed conflict markers, staged, and committed the fix:
+    ```zsh
+    git add index.html
+    git commit -m "Resolve merge conflict in application title"
+    ```
 
-# SSH Cryptographic Commit Signing
-git config commit.gpgsign true
-git config gpg.format ssh
-git config user.signingkey "/Users/dan/.ssh/id_ed25519_signing.pub"
-```
+- **How I fixed it on GitHub:**
+  - Pushed the resolution commit (`9a440f4`) to GitHub:
+    ```zsh
+    git push origin feature/app-title
+    ```
+  - GitHub detected the conflict was resolved and allowed merging PR #5.
+  - Merged PR #5 using the GitHub CLI:
+    ```zsh
+    gh pr merge 5 --merge
+    ```
 
-### B. GitHub CLI (`gh`) Authentication & Remote Linking
-My local terminal was securely authenticated with GitHub via the GitHub CLI keyring, granting full repository and workflow automation scopes:
-```text
-✓ Logged in to github.com account K1NGS1LVER (keyring)
-- Active account: true
-- Git operations protocol: https
-- Token scopes: 'gist', 'read:org', 'repo', 'workflow'
-```
-
----
-
-## 3. Branching Strategy Implementation
-I implemented the **GitHub Flow** branching model, ensuring that the production branch (`main`) remains pristine while all features, bug fixes, and documentation are developed in isolated, short-lived feature branches:
-- Every feature was branched off the latest `main`: `git switch -c <branch-name>`
-- Branches followed clear semantic prefixes: `feature/*` and `docs/*`
-- All changes were integrated exclusively through Pull Requests with peer review and status checks.
-
----
-
-## 4. Pull Requests Authored & Managed by Daniel Paul
-
-As part of the collaborative workflow, I created, managed, and successfully merged **8 distinct Pull Requests** covering functional JavaScript features, documentation, conflict resolutions, and CI/CD automation:
-
-| PR # | Branch Name | Target | Pull Request Title | Assigned Labels | Status |
-|---|---|---|---|---|---|
-| **#2** | `feature/javascript` | `main` | Add student details functionality | `feature`, `enhancement` | **Merged** |
-| **#3** | `docs/readme` | `main` | Write detailed project README | `documentation` | **Merged** |
-| **#5** | `feature/app-title` | `main` | Update application title (Conflict Exercise) | `conflict-resolved`, `enhancement` | **Merged** |
-| **#6** | `docs/readme-conflict` | `main` | Record merge conflict resolution | `conflict-resolved`, `documentation` | **Merged** |
-| **#7** | `feature/contact` | `main` | Add contact information | `feature`, `enhancement` | **Merged** |
-| **#8** | `docs/readme-contact` | `main` | Add contact branch and PR to project tables | `documentation` | **Merged** |
-| **#9** | `docs/readme-conflict-summary` | `main` | Add conflict resolution summary | `conflict-resolved`, `documentation` | **Merged** |
-| **#11** | `feature/devops-proof-and-hooks` | `main` | Add CI workflow, pre-commit conflict hook, and assignment proof | `devops`, `documentation`, `enhancement` | **Merged** |
-
-![GitHub Pull Requests Managed by Daniel Paul](docs/screenshots/02-github-prs-proof.png)
+![PR #5 Merge Conflict Resolution on GitHub](docs/screenshots/03-pr-conflict-details.png)
 
 ---
 
-## 5. Merge Conflict Demonstration & Resolution
+## 4. ⭐ Extra Work Done (Beyond Assignment Requirements)
 
-A core requirement was demonstrating the ability to intentionally trigger, identify, and resolve merge conflicts **both in local Git and remotely on GitHub**.
+These were not asked in the lab description but were added by me to make the repo production-ready:
 
-### A. The Cause of the Conflict
-Two parallel branches were created from the same base commit and independently modified the `<h1>` header element in `index.html`:
-- Branch `feature/student-name` changed `<h1>` to:  
-  `<h1>Student Management System</h1>`
-- My branch `feature/app-title` (PR #5) changed `<h1>` to:  
-  `<h1>MCA Student Information Portal</h1>`
+1. **Custom Git Pre-Commit Hook (`.githooks/pre-commit`):**
+   - Wrote a Zsh script using `ripgrep` that runs before every commit.
+   - It automatically scans staged code and blocks the commit if any unresolved conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) are left behind.
+   - Configured via: `git config core.hooksPath .githooks`
 
-When `feature/student-name` was merged first into `main`, GitHub detected overlapping edits on line 10 and flagged **Pull Request #5 as conflicting and unmergeable**.
+2. **GitHub Actions CI Pipeline (`.github/workflows/ci.yml`):**
+   - Created an automated CI workflow that runs on every pull request and push to `main`.
+   - Checks code for unresolved conflict markers and verifies HTML parsing.
 
-### B. Resolution in Local Git
-I resolved the conflict locally using standard Git 3-way merge practices:
-1. Switched to the feature branch and pulled the conflicting `main`:
-   ```zsh
-   git switch feature/app-title
-   git merge main
-   ```
-2. Git reported: `CONFLICT (content): Merge conflict in index.html`.
-3. Inspected the conflict markers in `index.html`:
-   ```html
-   <<<<<<< HEAD
-   <h1>MCA Student Information Portal</h1>
-   ||||||| 4027e68
-   <h1>Student Information System</h1>
-   =======
-   <h1>Student Management System</h1>
-   >>>>>>> main
-   ```
-4. Opened `index.html` in Neovim (`nvim index.html`), reconciled both intentions, and crafted the unified heading:
-   ```html
-   <h1>Student Management System – MCA</h1>
-   ```
-5. Cleared all conflict markers, staged the resolved file, and finalized the merge commit:
-   ```zsh
-   git add index.html
-   git commit -m "Resolve merge conflict in application title"
-   ```
+3. **GitHub Pull Request Labeling System:**
+   - Created custom color-coded labels (`conflict-resolved`, `devops`, `feature`, `ui`, `enhancement`, `documentation`).
+   - Categorized all pull requests using the GitHub CLI (`gh pr edit --add-label`).
 
-### C. Resolution Verification on GitHub
-1. Pushed the resolution commit (`9a440f4`) to the remote feature branch:
-   ```zsh
-   git push origin feature/app-title
-   ```
-2. On GitHub, Pull Request #5 automatically transitioned from **Conflicted** to **Mergeable** with all green checks.
-3. Merged PR #5 cleanly into `main` via GitHub CLI / Web UI.
+4. **Cryptographic SSH Commit Signing:**
+   - Configured Git to sign all commits with my local SSH key so GitHub marks them as "Verified".
 
-![PR #5 Conflict Resolution Details on GitHub](docs/screenshots/03-pr-conflict-details.png)
+5. **Terminal Proof Script via GitHub CLI (`gh`):**
+   - Captured PR details, commit SHAs, and CI run logs directly from the terminal without using the browser.
 
 ---
 
-## 6. Advanced DevOps Implementations (Extra Learning)
+## 5. Visual Proof Screenshots
 
-To exceed standard lab expectations and implement production-grade DevOps engineering practices, I implemented the following enhancements:
+### A. Git Commit Graph & Branch Topology
+Shows the feature branches, merge bubbles, and conflict resolution commit:
 
-### A. Pre-Commit Quality Gate (`.githooks/pre-commit`)
-Created an automated Git hook utilizing `ripgrep` (`rg`) to inspect staged code before every commit. If any unresolved conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) are detected, the commit is automatically rejected:
-```zsh
-# Enable shared repository hooks
-git config core.hooksPath .githooks
-chmod +x .githooks/pre-commit
-```
+![Git Commit Graph](docs/screenshots/01-git-branch-graph.png)
 
-### B. Automated Continuous Integration Pipeline (`.github/workflows/ci.yml`)
-Configured a GitHub Actions workflow that automatically executes on every pull request and push to `main`:
-- Checks out repository source code.
-- Scans all source files (`.html`, `.css`, `.js`) for accidental conflict markers.
-- Performs programmatic HTML syntax tree validation.
+### B. GitHub CLI (`gh`) Live Terminal Verification
+Shows live verification of PRs, conflict resolution commits (`3d5bfaa` and `9a440f4`), and passing CI runs:
 
-### C. Pull Request Categorization & GitHub Label Taxonomy
-Standardized PR management by creating and assigning color-coded labels:
-- `conflict-resolved` (#0e8a16): Explicit evidence of resolved merge collisions.
-- `devops` (#5319e7): CI/CD pipelines, hooks, and automated checks.
-- `feature` (#1d76db): New functionality additions.
-- `enhancement` (#a2eeef): UI and UX improvements.
-- `documentation` (#0075ca): Readme and laboratory documentation.
-
-### D. Cryptographic Commit Signing
-Enabled SSH-based cryptographic commit signing (`commit.gpgsign=true`, `gpg.format=ssh`) guaranteeing non-repudiation and cryptographic verification of all committed code.
-
----
-
-## 7. Visual Verification & Proof Gallery
-
-### Proof 1: Git Branch Topology & Commit Graph
-Illustrating independent branch lifecycles, divergent commits, and explicit merge commits:
-
-![Git Commit Graph & Topology](docs/screenshots/01-git-branch-graph.png)
-
-### Proof 2: Live GitHub CLI (`gh`) Verification Log
-Terminal evidence querying live PR states, commit SHAs (`3d5bfaa` and `9a440f4`), and passing CI workflows:
-
-![GitHub CLI Audit Evidence](docs/screenshots/04-gh-cli-evidence.png)
-
----
-
-## 8. Conclusion
-All objectives of DevOps Lab 1 have been completed:
-1. Git and GitHub configured with developer identity, SSH keys, and `gh` authentication.
-2. Feature branching strategy strictly enforced across all work.
-3. 8 individual Pull Requests created, reviewed, labeled, and merged.
-4. Merge conflicts intentionally induced, diagnosed, and resolved both locally in Git and remotely on GitHub.
-5. Production-grade DevOps practices implemented (automated pre-commit hooks, GitHub Actions CI, label taxonomy, and cryptographic signatures).
+![GitHub CLI Proof](docs/screenshots/04-gh-cli-evidence.png)
