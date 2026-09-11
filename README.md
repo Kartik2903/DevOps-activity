@@ -1,14 +1,20 @@
-# Student Information System (student-info-app)
+# DevOps Lab 1: Collaborative Git & GitHub Workflows
+### Student Information System (`student-info-app`)
+
+> **Assignment:** DevOps Lab 1  
+> **Student Name:** Daniel Paul  
+> **Roll No:** 2547159  
+> **GitHub:** [@K1NGS1LVER](https://github.com/K1NGS1LVER)
 
 A simple client-side student information web app, built as a hands-on exercise in **collaborative Git and GitHub workflows**. It lets a user enter a student's name, register number, and programme and renders each entry as a card on the page. There is no backend, database, or build step — just HTML, CSS, and plain JavaScript.
 
 ## Team Members
 
-| Name            | GitHub             | Role                      | Responsibility                            |
-|-----------------|--------------------|---------------------------|--------------------------------------------|
-| Kartik A        | Kartik2903          | Team Lead / Developer     | Repository setup, base app, integration/review of PRs |
-| Daniel Paul     | K1NGS1LVER         | JavaScript Developer      | Student form → dynamic card functionality  |
-| Sovin Somy      | sovinsomy           | UI Developer              | Card layout, spacing, heading/button styling |
+| Name            | Roll / Reg No | GitHub             | Role                      | Responsibility                            |
+|-----------------|---------------|--------------------|---------------------------|--------------------------------------------|
+| Kartik A        | —             | Kartik2903          | Team Lead / Developer     | Repository setup, base app, integration/review of PRs |
+| Daniel Paul     | 2547159       | K1NGS1LVER         | JavaScript Developer      | Student form → dynamic card functionality  |
+| Sovin Somy      | —             | sovinsomy           | UI Developer              | Card layout, spacing, heading/button styling |
 
 ## Project Description
 
