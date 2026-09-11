@@ -192,3 +192,14 @@ chmod +x .githooks/pre-commit
 
 ### 5. Automated CI/CD Workflow
 A GitHub Actions workflow is established in `.github/workflows/ci.yml` that triggers on all pull requests and pushes to `main`, validating HTML syntax and ensuring no conflict markers are merged into production.
+
+### 6. GitHub CLI (`gh`) Verification & Live Evidence
+The entire Pull Request lifecycle, merge conflict resolution commits, and CI execution history can be queried directly via the GitHub CLI:
+
+![GitHub CLI Verification Proof](docs/screenshots/04-gh-cli-evidence.png)
+
+#### Essential `gh` Verification Commands:
+- **Inspect all PRs:** `gh pr list --state all`
+- **Verify PR #5 Conflict Metadata:** `gh pr view 5`
+- **Audit Conflict Resolution Commits in PR:** `gh pr view 5 --json commits --jq '.commits[] | "\(.oid[0:7]) \(.authoredDate) - \(.messageHeadline) (\(.authors[0].name))"'`
+- **Verify CI Pipeline Runs:** `gh run list --limit 4`
